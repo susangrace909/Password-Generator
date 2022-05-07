@@ -1,5 +1,5 @@
 // global variables //
-var length = "";
+var pwLength = "";
 var password = "";
 var characters = "";
 var requiredChars = "";
@@ -10,16 +10,18 @@ var specialChars = "!@#$%^&*()";
 
 // length prompt //
 function pwPrompt() {
-  length = prompt(
+  characters = "";
+  requiredChars = "";
+  pwLength = prompt(
     "How many characters will your password have? Must be 8-128 characters."
   );
-  if (length < 8 || length > 128) {
+  if (pwLength < 8 || pwLength > 128) {
     window.alert("Password must be between 8 and 128 characters.");
     pwPrompt();
   }
-  if (isNaN(length)) {
+  if (isNaN(pwLength)) {
     window.alert("Password must be a number.");
-    return pwPrompt();
+    pwPrompt();
   }
 }
 
