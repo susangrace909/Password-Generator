@@ -24,4 +24,4 @@
 
 ## Screenshot:
 
-![Screenshot of website](Screenshot.docx)
+![Screenshot of website](Screenshot.png)
