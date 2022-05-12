@@ -10,11 +10,13 @@ var specialChars = "!@#$%^&*()";
 
 // length prompt //
 function pwPrompt() {
-  characters = "";
-  requiredChars = "";
   pwLength = prompt(
     "How many characters will your password have? Must be 8-128 characters."
   );
+  if (pwLength >= 8 && pwLength <= 128 && !isNaN(pwLength)) {
+    isUppercase();
+  }
+
   if (pwLength < 8 || pwLength > 128) {
     window.alert("Password must be between 8 and 128 characters.");
     pwPrompt();
@@ -26,72 +28,80 @@ function pwPrompt() {
 }
 
 // uppercase prompt //
-function uppercase() {
-  var uppercase = "";
-  uppercase = prompt("Would you like to include uppercase letters? Yes or no.");
-  uppercase = uppercase.toLowerCase();
-  if (uppercase === "yes") {
+function isUppercase() {
+  var upperQues = prompt(
+    "Would you like to include uppercase letters? Yes or no."
+  );
+  upperQues = upperQues.toLowerCase();
+  if (upperQues === "yes") {
     var randomNum = Math.floor(Math.random() * uppercase.length);
     characters += uppercase;
-    required += uppercase.charAt(randomNum);
-  } else if (uppercase === "no") {
+    requiredChars += uppercase.charAt(randomNum);
+    isLowercase();
+  } else if (upperQues === "no") {
     characters = characters;
+    isLowercase();
   } else {
     alert("Must be yes or no.");
-    uppercase();
+    isUppercase();
   }
 }
 
 // lowercase prompt //
-function lowercase() {
-  var lowercase = "";
-  lowercase = prompt("Would you like include lowercase letters? Yes or no.");
-  lowercase = lowercase.toLowerCase();
-  if (lowercase === "yes") {
+function isLowercase() {
+  var lowerQues = prompt(
+    "Would you like include lowercase letters? Yes or no."
+  );
+  lowerQues = lowerQues.toLowerCase();
+  if (lowerQues === "yes") {
     var randomNum = Math.floor(Math.random() * lowercase.length);
     characters += lowercase;
     requiredChars += lowercase.charAt(randomNum);
-  } else if (lowercase === "no") {
+    isNumeric();
+  } else if (lowerQues === "no") {
     characters = characters;
+    isNumeric();
   } else {
     alert("Must be yes or no.");
-    lowercase();
+    isLowercase();
   }
 }
 
 // numeric prompt //
-function numeric() {
-  var numeric = "";
-  numeric = prompt("Would you like to include numbers? Yes or no.");
-  numeric = numeric.toLowerCase();
-  if (numeric === "yes") {
+function isNumeric() {
+  var numericQues = prompt("Would you like to include numbers? Yes or no.");
+  numericQues = numericQues.toLowerCase();
+  if (numericQues === "yes") {
     var randomNum = Math.floor(Math.random() * numeric.length);
     characters += numeric;
     requiredChars += numeric.charAt(randomNum);
-  } else if (numeric === "no") {
+    specChars();
+  } else if (numericQues === "no") {
     characters = characters;
+    specChars();
   } else {
     alert("Must be yes or no.");
-    numeric();
+    isNumeric();
   }
 }
 
 // special characters prompt //
-function specialChars() {
-  var specialChars = "";
-  specialChars = prompt(
+function specChars() {
+  var specialCharsQues = prompt(
     "Would you like to include special characters? Yes or no."
   );
-  specialChars = specialChars.toLowerCase();
-  if (specialChars === "yes") {
+  specialCharsQues = specialCharsQues.toLowerCase();
+  if (specialCharsQues === "yes") {
     var randomNum = Math.floor(Math.random() * specialChars.length);
     characters += specialChars;
     requiredChars += specialChars.charAt(randomNum);
-  } else if (specialChars === "no") {
+    bareMinimum();
+  } else if (specialCharsQues === "no") {
     characters = characters;
+    bareMinimum();
   } else {
     alert("Must be yes or no.");
-    specialChars();
+    specChars();
   }
 }
 
@@ -107,14 +117,8 @@ function bareMinimum() {
 // Generator using critera above //
 function generatePassword() {
   pwPrompt();
-  uppercase();
-  lowercase();
-  numeric();
-  specialChars();
-  bareMinimum();
-  bareMinimum1();
-  var allChars = length - requiredChars.length;
-  for (var i = 0; i <= allChars; i++) {
+  var allChars = pwLength - requiredChars.length;
+  for (var i = 0; i <= allChars - 1; i++) {
     var randomNum = Math.floor(Math.random() * characters.length);
     password += characters.substring(randomNum, randomNum + 1);
   }
@@ -129,7 +133,6 @@ var generateBtn = document.querySelector("#generate");
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
-
   passwordText.value = password;
 }
 
